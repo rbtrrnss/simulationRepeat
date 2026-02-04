@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>simulationRepeat</title>
 
 <! created by Alexander Zintler
 2019-09-17: 1.0 initial version
@@ -33,7 +34,6 @@ right: 0px; top: 0px;
 position: absolute;
 height: 100%;
 width: 100%;
-pointer-events: none;
 z-index: 1;
 }
 div.buttonleft {
@@ -92,13 +92,23 @@ background-color: #00000070;
     function showb() {
         $('body').css('background-image', 'url("' + $('#ImageUrlBack').val() + '")');
     }
-function updatescale() {
-$('#scaleleft').css('width', 1000/$('#pmperpx').val() + 'px' );
-$('#scaleright').css('width', 1000/$('#pmperpx').val() + 'px' );
-    }
+	function updatescale() {
+		$('#scaleleft').css('width', 1000/$('#pmperpx').val() + 'px' );
+		$('#scaleright').css('width', 1000/$('#pmperpx').val() + 'px' );
+		}
 	function updateblend() {
-$('#left').css('mix-blend-mode', $('#blendmode').val() );
-    }
+		$('#left').css('mix-blend-mode', $('#blendmode').val() );
+		}
+	function switchsides() {
+		var urlleft = $('#left').css('background-image');
+		var leftfilename = $('#ImageUrlLeft').val();
+		var urlright = $('body').css('background-image');
+		var rightfilename = $('#ImageUrlBack').val();
+		$('body').css('background-image', urlleft);
+		$('#ImageUrlBack').val(leftfilename);
+		$('#left').css('background-image', urlright);
+		$('#ImageUrlLeft').val(rightfilename);
+		}
 
     // Drag and Drop functionality
     function setupDragAndDrop() {
@@ -117,19 +127,19 @@ $('#left').css('mix-blend-mode', $('#blendmode').val() );
             zone.addEventListener('dragover', e => {
                 e.preventDefault();
                 e.stopPropagation();
-                zone.style.opacity = '0.7';
+                zone.style.boxShadow = 'inset 0 0 120px rgba(100, 150, 255, 0.7)';
             });
             
             zone.addEventListener('dragleave', e => {
                 e.preventDefault();
                 e.stopPropagation();
-                zone.style.opacity = '1';
+                zone.style.boxShadow = 'none';
             });
             
             zone.addEventListener('drop', e => {
                 e.preventDefault();
                 e.stopPropagation();
-                zone.style.opacity = '1';
+                zone.style.boxShadow = 'none';
                 
                 const files = e.dataTransfer.files;
                 if (files.length > 0) {
@@ -143,8 +153,10 @@ $('#left').css('mix-blend-mode', $('#blendmode').val() );
                             
                             if (zone === leftDiv) {
                                 $('#left').css('background-image', 'url("' + imageUrl + '")');
+                                $('#ImageUrlLeft').val(file.name);
                             } else {
                                 $('body').css('background-image', 'url("' + imageUrl + '")');
+                                $('#ImageUrlBack').val(file.name);
                             }
                         };
                         
@@ -180,7 +192,8 @@ $('#left').css('mix-blend-mode', $('#blendmode').val() );
   <option value="lighten">lighten</option>
   <option value="overlay">overlay</option>
   <option value="difference">difference</option>
-</select> 
+</select> &nbsp &nbsp
+<input type="button" value="<->" onclick="switchsides()" /> 
 
 </div>
 
