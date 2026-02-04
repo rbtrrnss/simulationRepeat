@@ -1,4 +1,4 @@
-# TileMicroscope
+# simulationRepeat
 
 A web-based side-by-side image viewer for comparing simulated microscopy images.
 
@@ -34,5 +34,6 @@ Perfect for comparing different microscopy imaging modes such as:
 - No server required - runs entirely in the browser
 - Supports standard image formats (jpg, png, etc.)
 - Resizable left panel using CSS resize property
+
 
 
