@@ -25,6 +25,7 @@ width: 50%;
 resize: horizontal;
 overflow: hidden;
 border: 1px solid;
+mix-blend-mode: normal;
 z-index: 2;
 }
 #right {
@@ -94,6 +95,9 @@ background-color: #00000070;
 function updatescale() {
 $('#scaleleft').css('width', 1000/$('#pmperpx').val() + 'px' );
 $('#scaleright').css('width', 1000/$('#pmperpx').val() + 'px' );
+    }
+	function updateblend() {
+$('#left').css('mix-blend-mode', $('#blendmode').val() );
     }
 
     // Drag and Drop functionality
@@ -167,8 +171,16 @@ $('#scaleright').css('width', 1000/$('#pmperpx').val() + 'px' );
 <span>left </span><input id="ImageUrlLeft" size="48" value="img_HAADF.jpg" /> <!-- the textbox can get the user input Url of Image-->
 <input type="button" value="Go" onclick="showl()" /> <!-- the GO button --><br>
 
-&nbsp &nbsp &nbsp <input id="pmperpx" size="1" value="10" /> pm/pixel
-<input type="button" value="update scale" onclick="updatescale()" /> 
+&nbsp &nbsp &nbsp <input id="pmperpx" size="1" value="10" /> pm/px
+<input type="button" value="update scale" onclick="updatescale()" /> &nbsp 
+<label for="blendmode">blend mode: </label>
+<select id="blendmode" name="blendmode" onchange="updateblend()">
+  <option value="normal">normal</option>
+  <option value="multiply">multiply</option>
+  <option value="lighten">lighten</option>
+  <option value="overlay">overlay</option>
+  <option value="difference">difference</option>
+</select> 
 
 </div>
 
