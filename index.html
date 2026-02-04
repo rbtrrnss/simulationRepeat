@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<! created by Alexander Zintler
+2019-09-17: 1.0 initial version
+2019-11-25: 2.1 side by side view, input fields for file names
+2022-01-13: 3.0 scale bar was added, set resolution in top left
+2026-02-04: 4.0 drag and drop functionality added, left div position adjusted
+!>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style type="text/css">
+body {
+background-color: #2b2b2b;
+background-image: url("img_ABF.jpg");
+}
+#left {
+background-color: #2b2b2b;
+background-image: url("img_HAADF.jpg");
+left: -1px; top: -1px;
+position: absolute;
+height: 100%;
+width: 50%;
+resize: horizontal;
+overflow: hidden;
+border: 1px solid;
+z-index: 2;
+}
+#right {
+right: 0px; top: 0px;
+position: absolute;
+height: 100%;
+width: 100%;
+pointer-events: none;
+z-index: 1;
+}
+div.buttonleft {
+position: absolute;
+left: 1%; top: 10px;
+background-color: #f0f0f0;
+padding: 5px 5px;
+border-radius: 4px;
+z-index: 3;
+}
+div.buttonright {
+position: absolute;
+left: 51%; top: 10px;
+background-color: #f0f0f0;
+padding: 5px 5px;
+border-radius: 4px;
+z-index: 3;
+}
+#scaleleft {
+position: absolute;
+left: 1%; bottom: 10px;
+background-color: #ffffff;
+/* If simulation was at 10 pm per px */
+width: 100px; 
+height: 10px;
+border-color:#000000;
+border-style:solid;
+border-width:1px;
+z-index: 3;
+}
+#scaleright {
+position: absolute;
+right: 1%; bottom: 10px;
+background-color: #ffffff;
+/* If simulation was at 10 pm per px */
+width: 100px; 
+height: 10px;
+border-color:#000000;
+border-style:solid;
+border-width:1px;
+z-index: 3;
+}
+p {
+font-family:Arial;
+text-align:center;
+margin-top: -20px;
+color: white;
+background-color: #00000070;
+}
+</style>
+
+<script  type="text/javascript">
+    function showl() {
+        $('#left').css('background-image', 'url("' + $('#ImageUrlLeft').val() + '")');
+    }
+    function showb() {
+        $('body').css('background-image', 'url("' + $('#ImageUrlBack').val() + '")');
+    }
+function updatescale() {
+$('#scaleleft').css('width', 1000/$('#pmperpx').val() + 'px' );
+$('#scaleright').css('width', 1000/$('#pmperpx').val() + 'px' );
+    }
+
+    // Drag and Drop functionality
+    function setupDragAndDrop() {
+        const leftDiv = document.getElementById('left');
+        const rightDiv = document.getElementById('right');
+        
+        // Enable pointer events on right div for drag operations
+        rightDiv.style.pointerEvents = 'auto';
+        
+        // Prevent default browser behavior for entire document
+        document.addEventListener('dragover', e => e.preventDefault());
+        document.addEventListener('drop', e => e.preventDefault());
+        
+        // Setup drop zones for both divs
+        [leftDiv, rightDiv].forEach(zone => {
+            zone.addEventListener('dragover', e => {
+                e.preventDefault();
+                e.stopPropagation();
+                zone.style.opacity = '0.7';
+            });
+            
+            zone.addEventListener('dragleave', e => {
+                e.preventDefault();
+                e.stopPropagation();
+                zone.style.opacity = '1';
+            });
+            
+            zone.addEventListener('drop', e => {
+                e.preventDefault();
+                e.stopPropagation();
+                zone.style.opacity = '1';
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const file = files[0];
+                    
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(event) {
+                            const imageUrl = event.target.result;
+                            
+                            if (zone === leftDiv) {
+                                $('#left').css('background-image', 'url("' + imageUrl + '")');
+                            } else {
+                                $('body').css('background-image', 'url("' + imageUrl + '")');
+                            }
+                        };
+                        
+                        reader.readAsDataURL(file);
+                    } else {
+                        alert('Please drop an image file');
+                    }
+                }
+            });
+        });
+    }
+
+    // Initialize drag and drop when page loads
+    $(document).ready(function() {
+        setupDragAndDrop();
+    });
+</script>
+</head>
+
+<body>
+<div id="left"></div>
+<div id="right"></div>
+<div class="buttonleft">
+<span>left </span><input id="ImageUrlLeft" size="48" value="img_HAADF.jpg" /> <!-- the textbox can get the user input Url of Image-->
+<input type="button" value="Go" onclick="showl()" /> <!-- the GO button --><br>
+
+&nbsp &nbsp &nbsp <input id="pmperpx" size="1" value="10" /> pm/pixel
+<input type="button" value="update scale" onclick="updatescale()" /> 
+
+</div>
+
+<div id="scaleleft"><p>1 nm</p></div>
+
+<div class="buttonright">
+<span>right </span><input id="ImageUrlBack" size="48" value="img_ABF.jpg" /> <!-- the textbox can get the user input Url of Image-->
+<input type="button" value="Go" onclick="showb()" /> <!-- the GO button --></div>
+
+<div id="scaleright"><p>1 nm</p></div>
+</html>
