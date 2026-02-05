@@ -163,6 +163,7 @@ background-color: #00000070;
 <script  type="text/javascript">
     function showl() {
         $('#left').css('background-image', 'url("' + $('#ImageUrlLeft').val() + '")');
+		$('#overlap').css('background-image', 'url("' + $('#ImageUrlLeft').val() + '")');
     }
     function showb() {
         $('body').css('background-image', 'url("' + $('#ImageUrlBack').val() + '")');
@@ -182,8 +183,8 @@ background-color: #00000070;
 		$('body').css('background-image', urlleft);
 		$('#ImageUrlBack').val(leftfilename);
 		$('#left').css('background-image', urlright);
+		$('#overlap').css('background-image', urlright);
 		$('#ImageUrlLeft').val(rightfilename);
-		$('#overlap').css('background-image', rightfilename);
 		}
 
     // Drag and Drop functionality
