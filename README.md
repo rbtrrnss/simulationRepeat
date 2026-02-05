@@ -3,7 +3,7 @@
 A web-based side-by-side image viewer for comparing simulated microscopy images.  
 [You can test/use it on GitHub pages.](https://rbtrrnss.github.io/simulationRepeat/)  
   
-[<img src="screenshot.png" alt="screenshot of the tool" width="700"/>](/screenshot.png "screenshot of the too")  
+[<img src="screenshot.png" alt="screenshot of the tool" width="800"/>](/screenshot.png "screenshot of the too")  
 
 ## Features
 
@@ -32,6 +32,7 @@ A web-based side-by-side image viewer for comparing simulated microscopy images.
 - No server required - runs entirely in the browser
 - Supports standard image formats (jpg, png, etc.)
 - Resizable left panel using CSS resize property
+
 
 
 
