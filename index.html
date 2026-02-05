@@ -32,6 +32,19 @@ margin: 0;
 gap: 0;
 column-gap: 0;
 }
+#left-container::after {
+content: '';
+position: absolute;
+right: 0;
+bottom: 0;
+width: 0;
+height: 0;
+border-left: 14px solid transparent;
+border-top: 14px solid transparent;
+border-right: 14px solid #39ff14;
+border-bottom: 14px solid #39ff14;
+pointer-events: none;
+}
 #left {
 background-color: #2b2b2b;
 background-image: url("img_HAADF.jpg");
@@ -47,6 +60,19 @@ image-rendering: pixelated;
 z-index: 3;
 gap: 0;
 column-gap: 0;
+}
+#left::after {
+content: '';
+position: absolute;
+right: 0;
+bottom: 0;
+width: 0;
+height: 0;
+border-left: 14px solid transparent;
+border-top: 14px solid transparent;
+border-right: 14px solid #39ff14;
+border-bottom: 14px solid #39ff14;
+pointer-events: none;
 }
 #overlap {
 background-color: #2b2b2b;
@@ -64,6 +90,19 @@ mix-blend-mode: normal;
 image-rendering: crisp-edges;
 image-rendering: pixelated;
 z-index: 2;
+}
+#overlap::after {
+content: '';
+position: absolute;
+right: 0;
+bottom: 0;
+width: 0;
+height: 0;
+border-left: 14px solid transparent;
+border-top: 14px solid transparent;
+border-right: 14px solid #39ff14;
+border-bottom: 14px solid #39ff14;
+pointer-events: none;
 }
 #right {
 right: 0px; top: 0px;
